@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { VscTwitter } from 'react-icons/vsc'
 import SidebarOption from './SidebarOption'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { RiHome7Line, RiHome7Fill, RiFileList2Fill } from 'react-icons/ri'
 import { BiHash } from 'react-icons/bi'
 import { FiBell, FiMoreHorizontal } from 'react-icons/fi'
@@ -9,13 +9,14 @@ import { HiOutlineMail, HiMail } from 'react-icons/hi'
 import { FaRegListAlt, FaHashtag, FaBell } from 'react-icons/fa'
 import { CgMoreO } from 'react-icons/cg'
 import {
-    BsBookmark,
-    BsBookmarkFill,
-    BsPerson,
-    BsPersonFill,
-  } from 'react-icons/bs'
-
-
+  BsBookmark,
+  BsBookmarkFill,
+  BsPerson,
+  BsPersonFill,
+} from 'react-icons/bs'
+import { useRouter } from 'next/router'
+import { TwitterContext } from '../context/TwitterContext'
+import { sanityClient } from '../lib/sanity'
 
 const style = {
   wrapper: `flex-[0.7] px-8 flex flex-col`,
@@ -34,6 +35,8 @@ const style = {
 
 function Sidebar({ initialSelectedIcon = 'Home' }) {
   const [selected, setSelected] = useState(initialSelectedIcon)
+  const { currentAccount, currentUser } = useContext(TwitterContext)
+  const router = useRouter()
   return (
     <div className={style.wrapper}>
       <div className={style.twitterIconContainer}>
@@ -59,43 +62,60 @@ function Sidebar({ initialSelectedIcon = 'Home' }) {
           isActive={Boolean(selected === 'Notifications')}
           setSelected={setSelected}
         />
-         <SidebarOption
+        <SidebarOption
           Icon={selected === 'Messages' ? HiMail : HiOutlineMail}
-          text='Messages'
+          text="Messages"
           isActive={Boolean(selected === 'Messages')}
           setSelected={setSelected}
         />
         <SidebarOption
           Icon={selected === 'Bookmarks' ? BsBookmarkFill : BsBookmark}
-          text='Bookmarks'
+          text="Bookmarks"
           isActive={Boolean(selected === 'Bookmarks')}
           setSelected={setSelected}
         />
         <SidebarOption
           Icon={selected === 'Lists' ? RiFileList2Fill : FaRegListAlt}
-          text='Lists'
+          text="Lists"
           isActive={Boolean(selected === 'Lists')}
           setSelected={setSelected}
         />
         <SidebarOption
           Icon={selected === 'Profile' ? BsPersonFill : BsPerson}
-          text='Profile'
+          text="Profile"
           isActive={Boolean(selected === 'Profile')}
           setSelected={setSelected}
           redirect={'/profile'}
         />
-        <SidebarOption Icon={CgMoreO} text="More" setSelected={setSelected}
-        
-        />
-        <div>More</div>
-        <div className={style.tweetButton}>Mint</div>
+        <SidebarOption Icon={CgMoreO} text="More" setSelected={setSelected} />
+        <div
+          onClick={() => {
+            router.push(`${router.pathname}/?mint${currentAccount}`)
+          }}
+          className={style.tweetButton}
+        >
+          Mint
+        </div>
+        {/* <div className={style.tweetButton}>Mint</div> */}
       </div>
       <div className={style.profileButton}>
-        <div className={style.profileLeft}></div>
+        <div className={style.profileLeft}>
+          <img
+            src={currentUser.profileImage}
+            className={
+              currentUser.isProfileImageNft
+                ? `${style.profileImage} smallHex`
+                : style.profileImage
+            }
+          />
+        </div>
         <div className={style.profileRight}>
           <div className={style.details}>
-            <div className={style.name}>cleverqazi</div>
-            <div className={style.handle}>@0x22dF 5xf</div>
+            <div className={style.name}>{currentUser.name}</div>
+            <div className={style.handle}>
+              {' '}
+              @{currentAccount.slice(0, 6)}...{currentAccount.slice(39)}
+            </div>
           </div>
           <div className={style.moreContainer}>
             <FiMoreHorizontal />
@@ -107,4 +127,9 @@ function Sidebar({ initialSelectedIcon = 'Home' }) {
 }
 export default Sidebar
 
-
+// export async function getStaticProps() {
+//   const users = await sanityClient.fetch(currentUser)
+//   return {
+//     props: { users },
+//   }
+// }

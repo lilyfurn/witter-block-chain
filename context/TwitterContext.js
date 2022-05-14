@@ -62,8 +62,6 @@ export const TwitterProvider = ({ children }) => {
         setAppStatus('connected')
         setCurrentAccount(addressArray[0])
         createUserAccount(addressArray[0])
-        
-        
       } else {
         router.push('/')
         setAppStatus('notConnected')
@@ -72,6 +70,7 @@ export const TwitterProvider = ({ children }) => {
       setAppStatus('error')
     }
   }
+
   /**
    * Creates an account in Sanity DB if the user does not already have one
    * @param {String} userWalletAddress Wallet address of the currently logged in user
@@ -119,6 +118,8 @@ export const TwitterProvider = ({ children }) => {
           isProfileImageNft: item.author.isProfileImageNft,
         },
       }
+      
+    
     })
     setTweets(prevState => [...prevState, newItem])
   }

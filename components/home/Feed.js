@@ -4,6 +4,7 @@ import Post from '../Post'
 import { useContext } from 'react'
 import { TwitterContext } from '../../context/TwitterContext'
 
+
 // overflow-y-scroll on wrapper
 const style = {
   wrapper: `flex-[2] border-r border-l border-[#38444d] `,
@@ -11,38 +12,38 @@ const style = {
   headerTitle: `text-xl font-bold`,
 }
 
-// const tweets = [
-//   {
-//     displayName: 'Andros',
-//     userName: '0x29f417d103F71051f817C30D07848D43c842d810',
-//     avatar:
-//       'https://storage.googleapis.com/furcat.appspot.com/furcat-token.png',
-//     text: 'gm',
-//     isProfileImageNft: false,
-//     timestamp: '2021-03-01T07:00:08.000Z', // this is how sanity stores timestamps
-//   },
-//   {
-//     displayName: 'Andros',
-//     userName: '0x29f417d103F71051f817C30D07848D43c842d810',
-//     avatar:
-//       'https://storage.googleapis.com/furcat.appspot.com/furcat-token.png',
-//     text: 'gm',
-//     isProfileImageNft: false,
-//     timestamp: '2022-03-01T07:00:08.000Z', // this is how sanity stores timestamps
-//   },
-//   {
-//     displayName: 'Andros',
-//     userName: '0x29f417d103F71051f817C30D07848D43c842d810',
-//     avatar:
-//       'https://storage.googleapis.com/furcat.appspot.com/furcat-token.png',
-//     text: 'gm',
-//     isProfileImageNft: false,
-//     timestamp: '2022-03-01T07:00:08.000Z', // this is how sanity stores timestamps
-//   },
-// ]
+const tweets = [
+  {
+    displayName: 'Andros',
+    userName: '0x29f417d103F71051f817C30D07848D43c842d810',
+    avatar:
+      'https://storage.googleapis.com/furcat.appspot.com/furcat-token.png',
+    text: 'gm',
+    isProfileImageNft: false,
+    timestamp: '2021-03-01T07:00:08.000Z', // this is how sanity stores timestamps
+  },
+  {
+    displayName: 'Andros',
+    userName: '0x29f417d103F71051f817C30D07848D43c842d810',
+    avatar:
+      'https://storage.googleapis.com/furcat.appspot.com/furcat-token.png',
+    text: 'gm',
+    isProfileImageNft: false,
+    timestamp: '2022-03-01T07:00:08.000Z', // this is how sanity stores timestamps
+  },
+  {
+    displayName: 'Andros',
+    userName: '0x28f417d103F71051f817C30D07848D43c842d810',
+    avatar:
+      'https://storage.googleapis.com/furcat.appspot.com/furcat-token.png',
+    text: 'gm',
+    isProfileImageNft: false,
+    timestamp: '2022-03-01T07:00:08.000Z', // this is how sanity stores timestamps
+  },
+]
 
 function Feed() {
-  const { tweets } = useContext(TwitterContext)
+  // const { tweets } = useContext(TwitterContext)
   
   return (
     <div className={`${style.wrapper} no-scrollbar`}>
@@ -55,18 +56,18 @@ function Feed() {
         <Post
           key={index}
           displayName={
-            tweet.author.name === 'Unnamed'
-              ? `${tweet.author.walletAddress.slice(
+            tweet.displayName === 'Unnamed'
+              ? `${tweet.userName.slice(
                   0,
                   4
-                )}...${tweet.author.walletAddress.slice(41)}`
-              : tweet.author.name
+                )}...${tweet.userName.slice(41)}`
+              : tweet.displayName
           }
-          userName={`${tweet.author.walletAddress.slice(
+          userName={`${tweet.userName.slice(
             0,
             4
-          )}...${tweet.author.walletAddress.slice(-3)}`}
-          avatar={tweet.author.profileImage}
+          )}...${tweet.userName.slice(-3)}`}
+          avatar={tweet.avatar}
           text={tweet.text}
           isProfileImageNft={tweet.isProfileImageNft}
           timestamp={tweet.timestamp}
@@ -77,3 +78,5 @@ function Feed() {
 }
 
 export default Feed
+
+

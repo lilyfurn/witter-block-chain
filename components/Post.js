@@ -9,7 +9,7 @@ import { FiShare } from 'react-icons/fi'
 
 const style = {
   wrapper: `flex p-3 border-b border-[#38444d]`,
-  profileImage: `rounded-full h-[40px] w-[40px] object-cover`,
+  profileImage: `rounded-full h-[40px] w-[40px] object-cover max-w-none`,
   postMain: `flex-1 px-4`,
   headerDetails: `flex items-center`,
   name: `font-bold mr-1`,
@@ -31,6 +31,7 @@ const Post = ({
 }) => {
   return (
     <div className={style.wrapper}>
+      <div className=' max-w-none'></div>
       <div>
         <img
           src={avatar}

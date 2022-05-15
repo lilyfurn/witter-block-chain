@@ -1,5 +1,9 @@
 import { useRouter } from 'next/router'
+import { useContext } from 'react'
 import { BsArrowLeftShort } from 'react-icons/bs'
+import { TwitterContext } from '../../context/TwitterContext'
+
+
 
 const style = {
   wrapper: `border-[#38444d] border-b`,
@@ -20,8 +24,9 @@ const style = {
 
 const ProfileHeader = () => {
   const router = useRouter()
-  const isProfileImageNft = false
-  const currentAccount = '0x29f417d103F71051f817C30D07848D43c842d810'
+  const { currentAccount, currentUser } = useContext(TwitterContext)
+  // const isProfileImageNft = false
+  // const currentAccount = '0x29f417d103F71051f817C30D07848D43c842d810'
   return (
     <div className={style.wrapper}>
       <div className={style.header}>
@@ -29,8 +34,11 @@ const ProfileHeader = () => {
           <BsArrowLeftShort />
         </div>
         <div className={style.details}>
-          <div className={style.primary}>Andros</div>
-          <div className={style.secondary}>3 Tweets</div>
+          <div className={style.primary}>{currentUser.name}</div>
+          <div className={style.secondary}>
+             {currentUser.tweets?.length}{' '}
+             {currentUser.tweets?.length === 1 ? 'Tweet' : 'Tweets'}
+          </div>
         </div>
       </div>
       {/* <div className={style.profileImageContainer}></div> */}
@@ -43,13 +51,13 @@ const ProfileHeader = () => {
       </div>
       <div className={style.profileImageContainer}>
         <div
-          className={isProfileImageNft ? 'hex' : style.profileImageContainer}
+          className={currentUser.isProfileImageNft ? 'hex' : style.profileImageContainer}
         >
           <img
-            src="https://storage.googleapis.com/furcat.appspot.com/furcat-token.png"
-            alt="Andros"
+            src={currentUser.profileImage}
+            alt={currentUser.name}
             className={
-              isProfileImageNft ? style.profileImageNft : style.profileImage
+              currentUser.isProfileImageNft ? style.profileImageNft : style.profileImage
             }
           />
         </div>

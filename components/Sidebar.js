@@ -16,7 +16,9 @@ import {
 } from 'react-icons/bs'
 import { useRouter } from 'next/router'
 import { TwitterContext } from '../context/TwitterContext'
-import { sanityClient } from '../lib/sanity'
+import Modal from 'react-modal'
+import ProfileImageMinter from './mintingModal/ProfileImageMinter'
+import { customStyles } from '../lib/constants'
 
 const style = {
   wrapper: `flex-[0.7] px-8 flex flex-col`,
@@ -38,6 +40,10 @@ function Sidebar({ initialSelectedIcon = 'Home' }) {
   const [selected, setSelected] = useState(initialSelectedIcon)
   const { currentAccount, currentUser } = useContext(TwitterContext)
   const router = useRouter()
+
+  const [show, setShow] = useState(false)
+
+  const handleShow = () => setShow(true)
   return (
     <div className={style.wrapper}>
       <div className={style.twitterIconContainer}>
@@ -90,9 +96,9 @@ function Sidebar({ initialSelectedIcon = 'Home' }) {
         />
         <SidebarOption Icon={CgMoreO} text="More" setSelected={setSelected} />
         <div
-          onClick={() => {
-            router.push(`${router.pathname}/?mint${currentAccount}`)
-          }}
+          onClick={() =>
+            router.push(`${router.pathname}?mint=${currentAccount}`)
+          }
           className={style.tweetButton}
         >
           Mint
@@ -123,14 +129,15 @@ function Sidebar({ initialSelectedIcon = 'Home' }) {
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={Boolean(router.query.mint)}
+        onRequestClose={() => router.back()}
+        style={customStyles}
+        ariaHideApp={false}
+      >
+        <ProfileImageMinter />
+      </Modal>
     </div>
   )
 }
 export default Sidebar
-
-// export async function getStaticProps() {
-//   const users = await sanityClient.fetch(currentUser)
-//   return {
-//     props: { users },
-//   }
-// }

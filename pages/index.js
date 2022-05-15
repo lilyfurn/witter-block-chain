@@ -16,7 +16,7 @@ const style = {
 }
 
 export default function Home() {
-  const { appStatus, connectWallet } = useContext(TwitterContext)
+  const { appStatus, connectToWallet } = useContext(TwitterContext)
   
   const app = (status = appStatus) => {
     switch (status) {
@@ -50,7 +50,7 @@ export default function Home() {
       <Image src={metamaskLogo} width={200} height={200} />
       <div
         className={style.walletConnectButton}
-        onClick={() => connectWallet()}
+        onClick={() => connectToWallet()}
       >
         Connect Wallet
       </div>

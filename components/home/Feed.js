@@ -4,7 +4,6 @@ import Post from '../Post'
 import { useContext } from 'react'
 import { TwitterContext } from '../../context/TwitterContext'
 
-
 // overflow-y-scroll on wrapper
 const style = {
   wrapper: `flex-[2] border-r border-l border-[#38444d] `,
@@ -43,8 +42,9 @@ const tweets = [
 ]
 
 function Feed() {
-  // const { tweets } = useContext(TwitterContext)
-  
+  const { tweets, currentUser, currentAccount } =
+    useContext(TwitterContext)
+  // const { allUserTweets } = useContext(TwitterContext) ///
   return (
     <div className={`${style.wrapper} no-scrollbar`}>
       <div className={style.header}>
@@ -52,31 +52,71 @@ function Feed() {
         <BsStars />
       </div>
       <TweetBox />
-      {tweets.map((tweet, index) => (
+      <div>{tweets.length}</div>
+      <h1>walladdy: {currentAccount}</h1>
+      {/* {currentUser.tweets} {currentUser.tweets.length}*/}
+
+      {/* {tweets?.length > 0 &&
+        tweets.map((tweet, index) => (
+          <Post
+            key={tweet.timestamp}
+            displayName={
+              currentUser.name === 'Unnamed'
+                ? currentUser.walletAddress
+                : currentUser.name
+            }
+            userName={`${currentAccount.slice(0, 4)}...${currentAccount.slice(
+              -4
+            )}`}
+            text={tweet.tweet}
+            avatar={currentUser.profileImage}
+            isProfileImageNft={tweet.isProfileImageNft}
+            timestamp={tweet.timestamp}
+          />
+        ))} */}
+
+      {tweets?.map((tweet, index) => (
         <Post
           key={index}
           displayName={
-            tweet.displayName === 'Unnamed'
-              ? `${tweet.userName.slice(
-                  0,
-                  4
-                )}...${tweet.userName.slice(41)}`
-              : tweet.displayName
+            currentUser.name === 'Unnamed'
+              ? currentUser.walletAddress
+              : currentUser.name
           }
-          userName={`${tweet.userName.slice(
-            0,
-            4
-          )}...${tweet.userName.slice(-3)}`}
-          avatar={tweet.avatar}
-          text={tweet.text}
+          userName={`${currentAccount.slice(0, 4)}...${currentAccount.slice(
+            -4
+          )}`}
+          text={tweet.tweet}
+          avatar={currentUser.profileImage}
           isProfileImageNft={tweet.isProfileImageNft}
           timestamp={tweet.timestamp}
         />
       ))}
+
+      {/* {tweets.map((tweet, index) => (
+        
+        <Post
+          key={index}
+          displayName={tweet.author.name
+            currentUser.tweet.author.name === 'Unnamed'
+              ? `${tweet.author.walletAddress.slice(
+                  0,
+                  4
+                )}...${tweet.author.walletAddress.slice(41)}`
+              : tweet.author.name
+          }
+          userName={`${tweet.author.walletAddress.slice(
+            0,
+            4
+          )}...${tweet.author.walletAddress.slice(-3)}`}
+          avatar={tweet.author.profileImage}
+          text={tweet.tweet}
+          isProfileImageNft={tweet.isProfileImageNft}
+          timestamp={tweet.timestamp}
+        />
+      ))} */}
     </div>
   )
 }
 
 export default Feed
-
-

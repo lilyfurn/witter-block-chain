@@ -56,7 +56,7 @@ function Feed() {
       <h1>walladdy: {currentAccount}</h1>
       {/* {currentUser.tweets} {currentUser.tweets.length}*/}
 
-      {/* {tweets?.length > 0 &&
+      {tweets?.length > 0 &&
         tweets.map((tweet, index) => (
           <Post
             key={tweet.timestamp}
@@ -73,9 +73,9 @@ function Feed() {
             isProfileImageNft={tweet.isProfileImageNft}
             timestamp={tweet.timestamp}
           />
-        ))} */}
+        ))}
 
-      {tweets?.map((tweet, index) => (
+      {/* {tweets?.map((tweet, index) => (
         <Post
           key={index}
           displayName={
@@ -91,14 +91,14 @@ function Feed() {
           isProfileImageNft={tweet.isProfileImageNft}
           timestamp={tweet.timestamp}
         />
-      ))}
+      ))} */}
 
       {/* {tweets.map((tweet, index) => (
         
         <Post
           key={index}
-          displayName={tweet.author.name
-            currentUser.tweet.author.name === 'Unnamed'
+          displayName={
+            tweet.author.name === 'Unnamed'
               ? `${tweet.author.walletAddress.slice(
                   0,
                   4
@@ -111,7 +111,7 @@ function Feed() {
           )}...${tweet.author.walletAddress.slice(-3)}`}
           avatar={tweet.author.profileImage}
           text={tweet.tweet}
-          isProfileImageNft={tweet.isProfileImageNft}
+          isProfileImageNft={tweet.author.isProfileImageNft}
           timestamp={tweet.timestamp}
         />
       ))} */}

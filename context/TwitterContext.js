@@ -94,6 +94,14 @@ export const TwitterProvider = ({ children }) => {
     }
   }
 
+  const getNftProfileImage = async (imageUri, isNft) => {
+    if (isNft) {
+return `https://gateway.pinata.cloud/ipfs/${imageUri}`
+    } else {
+      return imageUri
+    }
+  }
+
   const fetchTweets = async () => {
     const query = `
     *[_type == "tweets"]{
@@ -107,18 +115,24 @@ export const TwitterProvider = ({ children }) => {
     setTweets([])
 
     sanityResponse.forEach(async (item) => {
+
+      const profileImageUrl = await getNftProfileImage(
+        item.author.profileImage,
+        item.author.isProfileImageNft
+      )
       const newItem = {
         tweet: item.tweet,
         timestamp: item.timestamp,
         author: {
           name: item.author.name,
           walletAddress: item.author.walletAddress,
-          profileImage: item.author.profileImage,
+          profileImage: profileImageUrl,
           isProfileImageNft: item.author.isProfileImageNft,
         },
       }
+      setTweets((prevState) => [...prevState, newItem])
     })
-    setTweets((prevState) => [...prevState, newItem])
+    
   }
 
   const getCurrentUserDetails = async (userAccount = currentAccount) => {
@@ -136,10 +150,15 @@ export const TwitterProvider = ({ children }) => {
     `
     const sanityResponse = await client.fetch(query)
 
+    const profileImageUri = await getNftProfileImage(
+      sanityResponse[0].profileImage,
+      sanityResponse[0].isProfileImageNft
+    )
+
     setCurrentUser({
       tweets: sanityResponse[0].tweets,
       name: sanityResponse[0].name,
-      profileImage: sanityResponse[0].profileImage,
+      profileImage: profileImageUri,
       walletAddress: sanityResponse[0].walletAddress,
       coverImage: sanityResponse[0].coverImage,
       isProfileImageNft: sanityResponse[0].isProfileImageNft,
@@ -172,7 +191,9 @@ export const TwitterProvider = ({ children }) => {
         tweets,
         fetchTweets,
         currentUser,
+        setAppStatus,
         getCurrentUserDetails,
+        getNftProfileImage
       }}
     >
       {children}

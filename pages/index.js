@@ -78,7 +78,7 @@ export default function Home() {
     <div className={style.loginContainer}>
       <Image src={errorImg} width={250} height={200} />
       <div className={style.loginContent}>
-        An error occurred. Please try again later or from another browser.
+        An error occurred. Please try again later.
       </div>
     </div>
   )

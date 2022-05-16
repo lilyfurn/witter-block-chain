@@ -1,5 +1,6 @@
 {
   "private": true,
+  "proxy": "https://witter-block-chain.vercel.app/",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

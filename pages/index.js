@@ -15,10 +15,7 @@ const style = {
   loginContent: `text-3xl font-bold text-center mt-24`,
 }
 
-const Hello = 58*2
-
 export default function Home() {
-  console.log(Hello)
   const { appStatus, connectToWallet } = useContext(TwitterContext)
   
   const app = (status = appStatus) => {

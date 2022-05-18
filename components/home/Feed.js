@@ -52,8 +52,8 @@ function Feed() {
         <BsStars />
       </div>
       <TweetBox />
-      <div>{tweets.length}</div>
-      <h1>walladdy: {currentAccount}</h1>
+      <div>All tweets will be displayed here.</div>
+      <h1>DevWallet:  {currentAccount}</h1>
       {/* {currentUser.tweets} {currentUser.tweets.length}*/}
 
       {tweets?.length > 0 &&

@@ -4,6 +4,7 @@ import { FaRegComment, FaRetweet } from 'react-icons/fa'
 import { format } from 'timeago.js'
 import { AiOutlineHeart } from 'react-icons/ai'
 import { FiShare } from 'react-icons/fi'
+import {useState} from 'react'
 
 
 
@@ -29,15 +30,17 @@ const Post = ({
   timestamp,
   isProfileImageNft,
 }) => {
+  const [profileImageLink] = useState(avatar)
+
   return (
     <div className={style.wrapper}>
       <div className=' max-w-none'></div>
       <div>
         <img
-          src={avatar}
+          src={profileImageLink}
           alt={userName}
           className={
-            true ? `${style.profileImage} smallHex` : style.profileImage
+            isProfileImageNft ? `${style.profileImage} smallHex` : style.profileImage
           }
         />
       </div>
@@ -45,7 +48,7 @@ const Post = ({
         <div>
           <span className={style.headerDetails}>
             <span className={style.name}>{displayName}</span>
-            {true && (
+            {isProfileImageNft && (
               <span className={style.verified}>
                 <BsFillPatchCheckFill />
               </span>

@@ -134,7 +134,7 @@ export const TwitterProvider = ({ children }) => {
 
   const getCurrentUserDetails = async (userAccount = currentAccount) => {
     if (appStatus !== 'connected') return
-
+   
     const query = `
       *[_type == "users" && _id == "${userAccount}"]{
         "tweets": tweets[]->{timestamp, tweet}|order(timestamp desc),
@@ -161,23 +161,6 @@ export const TwitterProvider = ({ children }) => {
       isProfileImageNft: sanityResponse[0].isProfileImageNft,
     })
   }
-
-  // const getAllTweets = async () => {
-  //   if (appStatus !== 'connected') return
-  //   //need to get all users for the user account
-  //   const query = `*[_type == "tweets" ]{
-  //     tweet,
-  //     timestamp,
-  //   }
-  //   `
-  //   const sanityResponse = await client.fetch(query)
-
-  //   setAllTweets({
-  //     tweets: sanityResponse[0].tweets,
-  //   })
-  // }
-
-  // const fetchTweets = async => {}
 
   return (
     <TwitterContext.Provider
